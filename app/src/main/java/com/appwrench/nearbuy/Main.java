@@ -4,17 +4,38 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
 
 public class Main extends ActionBarActivity {
+    private EditText searchBar;
+    private Button searchButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        addListenerOnButton();
     }
 
+    public void addListenerOnButton() {
+        searchBar = (EditText) findViewById(R.id.searchBar);
+        searchButton = (Button) findViewById(R.id.searchButton);
 
+        searchButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String query = searchBar.getText().toString();
+                Toast.makeText(getApplicationContext(), String.valueOf(query), Toast.LENGTH_LONG).show();
+            }
+
+        });
+    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
