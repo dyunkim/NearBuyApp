@@ -4,5 +4,7 @@
     <string name="app_name">NearBuy</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <color name="background_color">#002E8B</color>
+    <color name="text_color">#FFFFFF</color>
 
 </resources>

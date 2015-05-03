@@ -1,5 +1,9 @@
 package com.appwrench.nearbuy;
 
+import android.app.ActionBar;
+import android.app.Activity;
+import android.graphics.drawable.Drawable;
+import android.media.Image;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -8,17 +12,21 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 
 public class Main extends ActionBarActivity {
     private EditText searchBar;
     private Button searchButton;
+    private ImageView logo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        logo = (ImageView) findViewById(R.id.logo);
+        logo.setImageDrawable(getResources().getDrawable(R.drawable.logo));
 
         addListenerOnButton();
     }
@@ -42,7 +50,6 @@ public class Main extends ActionBarActivity {
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
