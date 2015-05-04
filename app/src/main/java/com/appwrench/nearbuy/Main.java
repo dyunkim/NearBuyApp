@@ -2,10 +2,12 @@ package com.appwrench.nearbuy;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.media.Image;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,7 +18,8 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 
-public class Main extends ActionBarActivity {
+public class Main extends Activity implements View.OnClickListener {
+    public final static String EXTRA_MESSAGE = "com.appwrench.nearbuy.MESSAGE";
     private EditText searchBar;
     private Button searchButton;
     private ImageView logo;
@@ -35,14 +38,7 @@ public class Main extends ActionBarActivity {
         searchBar = (EditText) findViewById(R.id.searchBar);
         searchButton = (Button) findViewById(R.id.searchButton);
 
-        searchButton.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String query = searchBar.getText().toString();
-                Toast.makeText(getApplicationContext(), String.valueOf(query), Toast.LENGTH_LONG).show();
-            }
-
-        });
+        searchButton.setOnClickListener(this);
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -63,5 +59,18 @@ public class Main extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onClick(View v) {
+        Log.i("clicks", "You Clicked Login");
+        Intent intent =new Intent(this, StoreListActivity.class);
+        String query = searchBar.getText().toString();
+        intent.putExtra(EXTRA_MESSAGE, query);
+        startActivity(intent);
+    }
+
+    public void query(View view) {
+
     }
 }

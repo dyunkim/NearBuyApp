@@ -26,7 +26,8 @@
         android:text="Search"
         android:layout_alignTop="@+id/searchBar"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:onClick="onClick"/>
 
     <ImageView
         android:layout_width="wrap_content"
