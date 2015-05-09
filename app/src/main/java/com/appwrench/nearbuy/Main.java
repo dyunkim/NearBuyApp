@@ -3,6 +3,7 @@ package com.appwrench.nearbuy;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.location.Location;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
@@ -15,23 +16,36 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.common.api.GoogleApiClient.ConnectionCallbacks;
+import com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListener;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 
-public class Main extends Activity implements OnClickListener {
+public class Main extends Activity
+        implements OnClickListener,
+            GoogleApiClient.ConnectionCallbacks,
+            GoogleApiClient.OnConnectionFailedListener {
+
+    private GoogleApiClient mGoogleApiClient;
     public final static String EXTRA_MESSAGE = "com.appwrench.nearbuy.MESSAGE";
     private EditText searchBar;
     private Button searchButton;
     private ImageView logo;
     private Button loginButton;
+    private double lat;
+    private double longit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        buildGoogleApiClient();
         // network connection
         StrictMode.ThreadPolicy policy = new StrictMode.
                 ThreadPolicy.Builder().permitAll().build();
@@ -58,6 +72,7 @@ public class Main extends Activity implements OnClickListener {
     }
 
     public void onClick(View v) {
+
         // check for which button press
         if(searchButton.isPressed() && isNetworkAvailable())
             query(v);
@@ -79,11 +94,30 @@ public class Main extends Activity implements OnClickListener {
         Log.i("clicks", "You Clicked Search");
         Intent intent = new Intent(this, StoreListActivity.class);
         Bundle bundle = new Bundle();
-        bundle.putString("query", searchBar.getText().toString());
+        String query = searchBar.getText().toString();
+        bundle.putString("query", query);
+        String loc = "" + longit + " " + lat;
+        Log.i("loc first", loc);
+        bundle.putDouble("longitude", longit);
+        bundle.putDouble("latitude", lat);
         intent.putExtras(bundle);
         startActivity(intent);
     }
+    @Override
+    public void onConnected(Bundle connectionHint) {
+        Location mLastLocation = LocationServices.FusedLocationApi.getLastLocation(
+                mGoogleApiClient);
+        if (mLastLocation != null) {
+            Log.i("hello", "hello");
+            lat = mLastLocation.getLatitude();
+            longit = mLastLocation.getLongitude();
+        }
+    }
 
+    @Override
+    public void onConnectionSuspended(int i) {
+
+    }
 
 
     // connection checking
@@ -122,6 +156,11 @@ public class Main extends Activity implements OnClickListener {
         // set textview
     }
 
+    @Override
+    public void onConnectionFailed(ConnectionResult connectionResult) {
+
+    }
+
     private class getStoresTask extends AsyncTask<APICaller, Long, JSONArray> {
 
         @Override
@@ -132,5 +171,13 @@ public class Main extends Activity implements OnClickListener {
         protected void onPostExecute(JSONArray arr) {
             setTexttoTextView(arr);
         }
+    }
+
+    protected synchronized void buildGoogleApiClient() {
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .addApi(LocationServices.API)
+                .build();
     }
 }
