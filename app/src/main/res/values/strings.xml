@@ -2,11 +2,23 @@
 <resources>
 
     <string name="app_name">NearBuy</string>
-    <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <color name="background_color">#002E8B</color>
     <color name="text_color">#FFFFFF</color>
     <string name="title_store_list">Stores</string>
     <string name="title_store_detail">Store Detail</string>
+
+    //store related
+    <string name="store_name">This is the store name</string>
+    <string name="store_address">This is the store address field</string>
+    <string name="store_owner">This is the store owner</string>
+    <string name="store_type">This is the store type field</string>
+    <string name="store_latitude">This is the lat</string>
+    <string name="store_longitude">This is the long</string>
+    <string name="store_picture">picture spot</string>
+    <string name="title_activity_store_list">StoreList</string>
+
+    <string name="hello_world">Hello world!</string>
+
 
 </resources>
