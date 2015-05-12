@@ -38,7 +38,7 @@ public class APICaller {
         latitude = 33;
         longitude = -97;
         InputStream inputStream = null;
-        String url = "http://192.168.56.101:3000/api/search"; // insert endpoint here
+        String url = "http://ec2-52-10-151-91.us-west-2.compute.amazonaws.com:3000/api/search"; // insert endpoint here
         String result = "";
         HttpEntity entity = null;
         //String json = "";
@@ -107,15 +107,13 @@ public class APICaller {
     public JSONObject GetStoreDetails(int id)
     {
         // insert endpoint here
-        String url = "http://192.168.56.101:3000/api/stores/"+id;
+        String url = "http://ec2-52-10-151-91.us-west-2.compute.amazonaws.com:3000/home/api/stores/"+id;
 
         // Get HttpResponse Object from url.
         // Get HttpEntity from Http Response Object
         HttpEntity entity = null;
-
         try
         {
-
             DefaultHttpClient client = new DefaultHttpClient();  // Default HttpClient
             HttpGet get = new HttpGet(url);
 
